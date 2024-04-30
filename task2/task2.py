@@ -4,6 +4,7 @@ import time
 
 
 def find_text(text, filename):
+    """Find text in file and sets the event"""
     try:
         with open(filename, 'r') as f:
             result = f.read()
@@ -17,7 +18,8 @@ def find_text(text, filename):
         time.sleep(5)
 
 
-def consumer(filename):
+def remove_file(filename):
+    """Wait and remove file"""
     product.wait()
     if os.path.exists(filename):
         os.remove(filename)
@@ -29,7 +31,7 @@ def consumer(filename):
 product = threading.Event()
 
 task1 = threading.Thread(target=find_text("wow!", "data.txt"))
-task2 = threading.Thread(target=consumer("data.txt"))
+task2 = threading.Thread(target=remove_file("data.txt"))
 
 task1.start()
 task2.start()
